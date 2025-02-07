@@ -11,7 +11,7 @@ Passos para rodar o projeto
 1. Clone o repositório
 Se ainda não tiver o repositório, clone-o usando o seguinte comando:
 
-git clone https://seu-repositorio.git
+git clone [https://seu-repositorio.git](https://github.com/gs4vo/WhatsApp-Chatbot-using-DeepSeek-and-Baileys.git)
 
 2. Instale as dependências
 Navegue até o diretório do projeto e instale as dependências necessárias:
