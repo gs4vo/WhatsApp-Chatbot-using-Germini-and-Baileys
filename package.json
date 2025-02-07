@@ -1,0 +1,12 @@
+{
+  "name": "chatbotia",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.12",
+    "axios": "^1.7.9",
+    "baileys": "^6.7.12",
+    "dotenv": "^16.4.7",
+    "qrcode-terminal": "^0.12.0"
+  }
+}
