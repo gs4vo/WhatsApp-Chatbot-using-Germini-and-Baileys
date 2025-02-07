@@ -15,6 +15,7 @@ bash
 Copiar
 Editar
 git clone https://seu-repositorio.git
+
 2. Instale as dependências
 Navegue até o diretório do projeto e instale as dependências necessárias:
 
@@ -23,6 +24,7 @@ Copiar
 Editar
 cd nome-do-repositorio
 npm install
+
 3. Configure o arquivo .env
 Crie um arquivo .env na raiz do projeto e adicione a sua chave da API do DeepSeek. O conteúdo do arquivo .env deve ser:
 
@@ -30,6 +32,7 @@ ini
 Copiar
 Editar
 DEEPSEEK_API_KEY=Sua_Chave_De_API_Aqui
+
 4. Autenticação e auth_info
 O bot precisa salvar as credenciais para poder funcionar corretamente. Na primeira execução, ele criará um arquivo de autenticação chamado auth_info, que será usado para manter a sessão entre as execuções. Certifique-se de sempre manter este arquivo na pasta do projeto para evitar a necessidade de reautenticação.
 
@@ -42,6 +45,7 @@ javascript
 Copiar
 Editar
 const BOT_NUMBER = '5551999999999'; // Substitua pelo número do seu bot
+
 6. Execute o código
 Após garantir que o arquivo auth_info está na pasta do projeto e que as configurações estão corretas, execute o bot com o seguinte comando:
 
@@ -58,6 +62,7 @@ Como funciona
 Autenticação: O bot usa o número do WhatsApp configurado para se conectar à conta. Se o bot não estiver autenticado, ele irá gerar um QR Code para que você possa escanear e autenticar a conta.
 Respostas automáticas: Sempre que o bot receber uma mensagem, ele fará uma requisição para a API do DeepSeek para gerar uma resposta com base no conteúdo da mensagem.
 Resposta ao usuário: A resposta gerada pela API será enviada de volta para o usuário que enviou a mensagem.
+
 Contribuição
 Se você deseja contribuir para este projeto, fique à vontade para abrir um pull request com melhorias ou correções.
 
