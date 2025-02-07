@@ -11,26 +11,17 @@ Passos para rodar o projeto
 1. Clone o repositório
 Se ainda não tiver o repositório, clone-o usando o seguinte comando:
 
-bash
-Copiar
-Editar
 git clone https://seu-repositorio.git
 
 2. Instale as dependências
 Navegue até o diretório do projeto e instale as dependências necessárias:
 
-bash
-Copiar
-Editar
 cd nome-do-repositorio
 npm install
 
 3. Configure o arquivo .env
 Crie um arquivo .env na raiz do projeto e adicione a sua chave da API do DeepSeek. O conteúdo do arquivo .env deve ser:
 
-ini
-Copiar
-Editar
 DEEPSEEK_API_KEY=Sua_Chave_De_API_Aqui
 
 4. Autenticação e auth_info
@@ -41,17 +32,11 @@ Se o arquivo auth_info não estiver presente ou for deletado, o bot pedirá para
 5. Alteração do número do bot
 No código, o número do bot está configurado como '5545920009707' (Brasil). Se você estiver usando outro número, altere a constante BOT_NUMBER para o número desejado no formato internacional. Exemplo:
 
-javascript
-Copiar
-Editar
 const BOT_NUMBER = '5551999999999'; // Substitua pelo número do seu bot
 
 6. Execute o código
 Após garantir que o arquivo auth_info está na pasta do projeto e que as configurações estão corretas, execute o bot com o seguinte comando:
 
-bash
-Copiar
-Editar
 npm start
 Se o auth_info não estiver presente ou expirado, o bot irá gerar um novo QR Code. Escaneie o código com o WhatsApp para autenticar o bot.
 
