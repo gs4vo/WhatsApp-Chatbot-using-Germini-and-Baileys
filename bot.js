@@ -4,28 +4,24 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
-const DEEPSEEK_URL = "https://api.deepseek.com/v1/chat/completions";
+const LLAMA_API_URL = "http://localhost:11434/api/generate";
 const BOT_NUMBER = '5545920009707';
 
 async function getAIResponse(message) {
   try {
-    const response = await axios.post(
-      DEEPSEEK_URL,
-      {
-        model: "deepseek-chat",
-        messages: [{ role: "user", content: message }],
-      },
-      {
-        headers: {
-          "Authorization": `Bearer ${DEEPSEEK_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return response.data.choices[0].message.content;
+    const response = await axios.post(LLAMA_API_URL, {
+      model: "llama3",
+      prompt: message,
+      stream: false,
+    });
+
+    if (!response.data || !response.data.response) {
+      return "Erro ao gerar resposta.";
+    }
+
+    return response.data.response;
   } catch (error) {
-    console.error("Erro na API do DeepSeek:", error.response?.data || error);
+    console.error("Erro na API do Llama:", error.response?.data || error);
     return "Erro ao gerar resposta.";
   }
 }
