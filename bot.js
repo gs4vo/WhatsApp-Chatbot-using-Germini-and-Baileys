@@ -5,7 +5,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 const LLAMA_API_URL = "http://localhost:11434/api/generate";
-const BOT_NUMBER = '5545920009707';
+const BOT_NUMBER = '554520311675@s.whatsapp.net';
 
 async function getAIResponse(message) {
   try {
@@ -52,15 +52,18 @@ async function startBot() {
     if (!msg.message || !msg.key.remoteJid) return;
 
     const sender = msg.key.remoteJid;
+    const isBotMessage = msg.key.fromMe;
     const text =
       msg.message.conversation ||
       msg.message.extendedTextMessage?.text ||
       msg.message.imageMessage?.caption;
 
-    if (text) {
+    if (text && !isBotMessage && sender.endsWith('@s.whatsapp.net')) {
       console.log(`📩 Mensagem recebida de ${sender}:`, text);
+
       const response = await getAIResponse(text);
-      await sock.sendMessage(sender, { text: response });
+
+      await sock.sendMessage(sender, { text: response }, { quoted: msg });
       console.log(`✅ Resposta enviada para ${sender}`);
     }
   });
