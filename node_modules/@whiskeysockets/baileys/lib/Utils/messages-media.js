@@ -215,7 +215,7 @@ exports.getAudioDuration = getAudioDuration;
  */
 async function getAudioWaveform(buffer, logger) {
     try {
-        const audioDecode = (buffer) => Promise.resolve().then(() => __importStar(require('audio-decode'))).then(({ default: audioDecode }) => audioDecode(buffer));
+        const { default: decoder } = await eval('import(\'audio-decode\')');
         let audioData;
         if (Buffer.isBuffer(buffer)) {
             audioData = buffer;
@@ -227,7 +227,7 @@ async function getAudioWaveform(buffer, logger) {
         else {
             audioData = await (0, exports.toBuffer)(buffer);
         }
-        const audioBuffer = await audioDecode(audioData);
+        const audioBuffer = await decoder(audioData);
         const rawData = audioBuffer.getChannelData(0); // We only need to work with one channel of data
         const samples = 64; // Number of samples we want to have in our final data set
         const blockSize = Math.floor(rawData.length / samples); // the number of samples in each subdivision

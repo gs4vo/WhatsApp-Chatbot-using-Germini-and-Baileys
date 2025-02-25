@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
+    "@google/generative-ai": "^0.22.0",
     "@whiskeysockets/baileys": "^6.7.12",
     "axios": "^1.7.9",
     "baileys": "^6.7.12",

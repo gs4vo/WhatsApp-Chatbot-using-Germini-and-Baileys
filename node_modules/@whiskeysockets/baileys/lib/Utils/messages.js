@@ -157,8 +157,14 @@ const prepareWAMessageMedia = async (message, options) => {
         encWriteStream.destroy();
         // remove tmp files
         if (didSaveToTmpPath && bodyPath) {
-            await fs_1.promises.unlink(bodyPath);
-            logger === null || logger === void 0 ? void 0 : logger.debug('removed tmp files');
+            try {
+                await fs_1.promises.access(bodyPath);
+                await fs_1.promises.unlink(bodyPath);
+                logger === null || logger === void 0 ? void 0 : logger.debug('removed tmp file');
+            }
+            catch (error) {
+                logger === null || logger === void 0 ? void 0 : logger.warn('failed to remove tmp file');
+            }
         }
     });
     const obj = Types_1.WAProto.Message.fromObject({
