@@ -7,8 +7,19 @@ dotenv.config();
 const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyBEbCNqWNymwL0M0vljckMxpYy56A8-aJU";
 const BOT_NUMBER = '554520311657@s.whatsapp.net';
 
+const COLORS = {
+  reset: "\x1b[0m",
+  green: "\x1b[32m",
+  yellow: "\x1b[33m",
+  red: "\x1b[31m",
+  cyan: "\x1b[36m",
+  magenta: "\x1b[35m",
+};
+
 async function getAIResponse(message) {
   try {
+    console.log(`${COLORS.cyan}🤖 Enviando mensagem para API do Gemini...${COLORS.reset}`);
+
     const response = await axios.post(GEMINI_API_URL, {
       contents: [{ parts: [{ text: message }] }]
     }, {
@@ -19,15 +30,18 @@ async function getAIResponse(message) {
       return "Erro ao gerar resposta.";
     }
 
+    console.log(`${COLORS.green}✅ Resposta da IA recebida com sucesso.${COLORS.reset}`);
     return response.data.candidates[0].content.parts[0].text;
   } catch (error) {
-    console.error("Erro na API do Gemini:", error.response?.data || error);
+    console.error(`${COLORS.red}❌ Erro na API do Gemini:${COLORS.reset}`, error.response?.data || error);
     return "Erro ao gerar resposta.";
   }
 }
 
 async function startBot() {
   const { state, saveCreds } = await useMultiFileAuthState("auth_info");
+
+  console.log(`${COLORS.magenta}🚀 Iniciando o bot...${COLORS.reset}`);
 
   const sock = makeWASocket({
     auth: state,
@@ -40,23 +54,23 @@ async function startBot() {
     const { connection, lastDisconnect, qr } = update;
 
     if (qr) {
-      console.log("📲 Escaneie o QR Code para autenticar.");
+      console.log(`${COLORS.cyan}📲 Escaneie o QR Code para autenticar.${COLORS.reset}`);
     }
 
     if (connection === "close") {
       const shouldReconnect =
         lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut;
 
-      console.log(`⚠️ Conexão perdida. Tentando reconectar...`);
+      console.log(`${COLORS.yellow}⚠️ Conexão perdida. Tentando reconectar...${COLORS.reset}`);
       if (shouldReconnect) {
         startBot();
       } else {
-        console.log("❌ Logout detectado. Apague a pasta 'auth_info' e reinicie o bot.");
+        console.log(`${COLORS.red}❌ Logout detectado. Apague a pasta 'auth_info' e reinicie o bot.${COLORS.reset}`);
       }
     }
 
     if (connection === "open") {
-      console.log("✅ Bot conectado ao WhatsApp!");
+      console.log(`${COLORS.green}✅ Bot conectado ao WhatsApp!${COLORS.reset}`);
     }
   });
 
@@ -72,12 +86,12 @@ async function startBot() {
       msg.message.imageMessage?.caption;
 
     if (text && !isBotMessage && sender.endsWith('@s.whatsapp.net')) {
-      console.log(`📩 Mensagem recebida de ${sender}:`, text);
+      console.log(`${COLORS.cyan}📩 Mensagem recebida de ${sender}:${COLORS.reset} ${text}`);
 
       const response = await getAIResponse(text);
 
       await sock.sendMessage(sender, { text: response }, { quoted: msg });
-      console.log(`✅ Resposta enviada para ${sender}`);
+      console.log(`${COLORS.green}✅ Resposta enviada para ${sender}${COLORS.reset}`);
     }
   });
 }
